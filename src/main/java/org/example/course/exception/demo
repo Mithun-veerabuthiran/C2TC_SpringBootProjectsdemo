@@ -1,0 +1,79 @@
+Here’s a detailed explanation of the provided Java code:
+
+```java
+package com.tns.course.exception;
+
+@SuppressWarnings("serial")
+public class ServiceException extends RuntimeException {
+
+    public ServiceException(String message) {
+        super(message);
+    }
+
+    public ServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+```
+
+### Code Breakdown
+
+#### 1. Package Declaration
+
+```java
+package com.tns.course.exception;
+```
+- This line specifies that the class `ServiceException` is part of the `com.tns.course.exception` package. Packages are used to organize Java classes and avoid naming conflicts.
+
+#### 2. SuppressWarnings Annotation
+
+```java
+@SuppressWarnings("serial")
+```
+- This annotation tells the Java compiler to ignore warnings related to serialization.
+- Specifically, it suppresses warnings about the absence of a `serialVersionUID` field, which is generally recommended for classes that implement `Serializable`. However, since this is a custom runtime exception and typically not serialized, the warning can be safely ignored.
+
+#### 3. Class Declaration
+
+```java
+public class ServiceException extends RuntimeException {
+```
+- This declares a new class called `ServiceException`.
+- It extends `RuntimeException`, meaning it is an unchecked exception (does not need to be declared in a method’s `throws` clause).
+- Custom exceptions like this are often used to represent specific error conditions in an application’s service layer.
+
+#### 4. Constructors
+
+```java
+public ServiceException(String message) {
+    super(message);
+}
+```
+- This constructor accepts a `String message` parameter.
+- It passes the message to the superclass (`RuntimeException`), which can later be retrieved using `getMessage()`.
+
+```java
+public ServiceException(String message, Throwable cause) {
+    super(message, cause);
+}
+```
+- This constructor accepts both a `String message` and a `Throwable cause`.
+- It passes both to the superclass. This is useful if you want to wrap another exception (the cause) inside your custom exception, preserving the original stack trace and error information.
+
+### Usage
+
+- `ServiceException` can be thrown in your application’s service layer when a business error occurs that you want to handle separately from other exceptions.
+- Example:
+  ```java
+  if (courseNotFound) {
+      throw new ServiceException("Course not found with ID: " + id);
+  }
+  ```
+
+### Summary
+
+- **Purpose:** Custom unchecked exception for service layer errors.
+- **Features:** Two constructors for flexibility (with just a message or with both message and cause).
+- **Best Practice:** Helps in clean error handling and separation of concerns in layered applications.
+
+Let me know if you’d like to see example usage or more details!
